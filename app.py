@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from joblib import load
 from numpy import int64
 from pydantic import BaseModel
+import uvicorn
+
 
 # load model
 model_LogisticRegression = load('/model/LogisticRegression/model_LogisticRegression.joblib')
@@ -77,3 +79,6 @@ def predictSVM(params: ModelParams):
   ];
   pred = get_prediction(model_OneClassSVM, values, True)
   return pred
+
+if __name__ == "__main__":
+  uvicorn.run("server.api:app", host="0.0.0.0", port=8000, reload=True)
