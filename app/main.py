@@ -1,14 +1,11 @@
-from typing import Union
 from fastapi import FastAPI
 from joblib import load
 from numpy import int64
 from pydantic import BaseModel
-import uvicorn
-
 
 # load model
-model_LogisticRegression = load('/model/LogisticRegression/model_LogisticRegression.joblib')
-model_OneClassSVM = load('/model/OneClassSVM/model_OneClassSVM.joblib')
+model_LogisticRegression = load('../model/LogisticRegression/model_LogisticRegression.joblib')
+model_OneClassSVM = load('../model/OneClassSVM/model_OneClassSVM.joblib')
 
 def get_prediction(model, params, isCVM=False):
   x = [params]
@@ -79,6 +76,3 @@ def predictSVM(params: ModelParams):
   ];
   pred = get_prediction(model_OneClassSVM, values, True)
   return pred
-
-if __name__ == "__main__":
-  uvicorn.run("server.api:app", host="0.0.0.0", port=8000, reload=True)
